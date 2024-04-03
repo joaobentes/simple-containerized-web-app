@@ -56,6 +56,14 @@ To stop the running services, you can either press `CTRL+C` in the terminal wher
 docker-compose down
 ```
 
+## Testing the API
+
+The API comes with a built-in Swagger UI, which provides a user-friendly interface to test the API endpoints. You can access the Swagger UI by navigating to the following URL in your web browser:
+
+[http://localhost:8000/swagger/index.html#/default](http://localhost:8000/swagger/index.html#/default)
+
+From the Swagger UI, you can view the details of each API endpoint, send requests to the endpoints, and view the responses from the server.
+
 ## Known Issues
 
 - When running `docker-compose up` for the first time, the database service may not initialize in time for the API to make a call. 
