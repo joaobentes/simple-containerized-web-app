@@ -4,6 +4,8 @@ services:
     build: ./api
     ports:
       - '5000:5000'
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=postgres;Username=postgres;Password=Your_password123;
 
   frontend:
     build: ./front-end
@@ -11,3 +13,17 @@ services:
       - '1234:1234'
     depends_on:
       - api
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Your_password123
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using BookApi;
 
-// TODO: Do the server up time with web sockets
+/*
+  TODO: 
+    - Do the server up time with web sockets
+    - Structure the project a bit better. Organize the project better. Too many things in the main file.
+*/
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<BookDb>(options => options.UseInMemoryDatabase("BooksDb"));
+builder.Services.AddDbContext<BookDb>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddEndpointsApiExplorer();
