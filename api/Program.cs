@@ -28,6 +28,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+app.UseRouting();
 
 // Ensure the database is created and add initial data
 using (var scope = app.Services.CreateScope())

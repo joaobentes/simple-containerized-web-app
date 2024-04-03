@@ -14,7 +14,7 @@
   <script>
     const checkServerHealth = () => {
       // TODO: Get server URL from environment variable
-      fetch('http://localhost:5000/health')
+      fetch('http://localhost:8000/health')
         .then(response => {
           if (!response.ok) {
             throw new Error('Server health check failed');
@@ -38,7 +38,7 @@
     checkServerHealth();
 
     // TODO: Get server URL from environment variable
-    fetch('http://localhost:5000/book')
+    fetch('http://localhost:8000/book')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
