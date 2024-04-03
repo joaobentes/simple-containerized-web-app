@@ -49,17 +49,15 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors();
 
-if (app.Environment.IsDevelopment())
+app.UseOpenApi();
+app.UseSwaggerUi(config =>
 {
-  app.UseOpenApi();
-  app.UseSwaggerUi(config =>
-  {
-    config.DocumentTitle = "Books API";
-    config.Path = "/swagger";
-    config.DocumentPath = "/swagger/{documentName}/swagger.json";
-    config.DocExpansion = "list";
-  });
-}
+  config.DocumentTitle = "Books API";
+  config.Path = "/swagger";
+  config.DocumentPath = "/swagger/{documentName}/swagger.json";
+  config.DocExpansion = "list";
+});
+
 app.MapGet("/health", () => Results.Ok("Server is running"));
 
 app.MapGet("/book", async (BookDb db) =>
