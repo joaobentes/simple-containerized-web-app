@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Book List</title>
+</head>
+
+<body>
+  <p id="empty-message" style="display: none;">No books available.</p>
+  <p id="error-message" style="display: none;">The service is down.</p>
+  <h1>Book List</h1>
+  <ul id="book-list"></ul>
+
+  <script>
+    const checkServerHealth = () => {
+      // TODO: Get server URL from environment variable
+      fetch('http://localhost:5000/health')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Server health check failed');
+          }
+          return response.text();
+        })
+        .then(data => {
+          console.log('Server health check: ', data);
+          document.getElementById('error-message').style.display = 'none';
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('error-message').style.display = 'block';
+        });
+    };
+
+    // TODO: Not a big fan of this solution. Change it to WebSockets later
+    // TODO: Get this interval from environment variable
+    setInterval(checkServerHealth, 2 * 1000);
+
+    checkServerHealth();
+
+    // TODO: Get server URL from environment variable
+    fetch('http://localhost:5000/book')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const bookList = document.getElementById('book-list');
+        console.log(data);
+        if (data.length === 0) {
+          bookList.innerHTML = 'No books available.';
+        } else {
+          data.forEach(book => {
+            const li = document.createElement('li');
+            li.textContent = `${book.title}`;
+            bookList.appendChild(li);
+          });
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        const bookList = document.getElementById('book-list');
+        bookList.innerHTML = 'Unable to connect to the server.';
+      });
+  </script>
+</body>
+
+</html>
